@@ -1,5 +1,7 @@
 ---
 import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../css/base.css'
 
 const { titre } = Astro.props;
 ---
@@ -10,13 +12,16 @@ const { titre } = Astro.props;
     <head>
         <meta charset="utf-8" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link href="@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');">
         <meta name="viewport" content="width=device-width" />
+        <link rel="stylesheet" href="../src/css/base.css" />
         <title> {titre} </title>
     </head>
-    <body>
+    <body class="min-h-screen flex flex-col">
         <Header/>
-        <main>
+        <main class="px-5 py-5 flex-grow p-4">
             <slot />
         </main>
+        <Footer />
     </body>
 </html>
