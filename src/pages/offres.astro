@@ -1,57 +1,50 @@
 ---
+import { late } from 'astro:schema'
 import Base from '../layouts/Base.astro'
+const offres = [
+    {
+        "adresse": "2821 Lake Sevilla, Palm Harbor, TX",
+        "favori": true,
+        "id": "64l3n8nar836i5j",
+        "nbChambres": 4,
+        "nbSdb": 2,
+        "nomMaison": "Beverly Springfield",
+        "prix": 2700,
+        "surface": 45,
+        "imgUrl": "image1.png"
+    },
+    {
+        "adresse": "2699 Green Valley, Highland Lake",
+        "favori": true,
+        "id": "lo831zeg10hpm9y",
+        "nbChambres": 4,
+        "nbSdb": 2,
+        "nomMaison": "Palm Harbor",
+        "prix": 2095,
+        "surface": 42,
+        "imgUrl": "image2.png"
+    },
+    {
+        "adresse": "909 Woodland St, Michigan, IN",
+        "favori": false,
+        "id": "s1zuhj19x8eb242",
+        "nbChambres": 4,
+        "nbSdb": 3,
+        "nomMaison": "Faulkner Ave",
+        "prix": 4550,
+        "surface": 80,
+        "imgUrl": "image3.png"
+    }
+]
 ---
 
 <Base titre="Accueil">
-    <h1 class="text-6xl text-center">Offres</h1>
+    <h1 class="text-6xl text-center">Offres</h1>   
+    
     <div>
-        <div class="grid grid-cols-3 gap-10 py-7 text-2xl">
-            <p class="col-span-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo iusto eligendi, vitae culpa, veritatis sunt unde ea, voluptate harum vero fugiat atque velit! Porro assumenda, sequi numquam commodi nihil ut.</p>
-            <p class="col-span-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo iusto eligendi, vitae culpa, veritatis sunt unde ea, voluptate harum vero fugiat atque velit! Porro assumenda, sequi numquam commodi nihil ut.</p>
-            <p class="col-span-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo iusto eligendi, vitae culpa, veritatis sunt unde ea, voluptate harum vero fugiat atque velit! Porro assumenda, sequi numquam commodi nihil ut.</p>
-        </div>
-        <div>
-            <div class="grid grid-cols-2 gap-12 py-10 text-xl">
-                <p class="col-span-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo iusto eligendi, vitae culpa, veritatis sunt unde ea, voluptate harum vero fugiat atque velit! Porro assumenda, sequi numquam commodi nihil ut.</p>
-                <p class="col-span-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo iusto eligendi, vitae culpa, veritatis sunt unde ea, voluptate harum vero fugiat atque velit! Porro assumenda, sequi numquam commodi nihil ut.</p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-10 gap-4 py-10">
-            <p class="col-span-1">Élément inutile 0 </p>
-            <p class="col-span-1">Élément inutile 1 </p>
-            <p class="col-span-1">Élément inutile 2 </p>
-            <p class="col-span-1">Élément inutile 3 </p>
-            <p class="col-span-1">Élément inutile 4 </p>
-            <p class="col-span-1">Élément inutile 5 </p>
-            <p class="col-span-1">Élément inutile 6 </p>
-            <p class="col-span-1">Élément inutile 7 </p>
-            <p class="col-span-1">Élément inutile 8 </p>
-            <p class="col-span-1">Élément inutile 9 </p>
-        </div>
-
-        <div class="grid grid-cols-6 gap-4 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-10">
-            <div class="w-24 h-24 bg-purple-500"></div>
-            <div class="w-24 h-24 bg-orange-500"></div>
-            <div class="w-24 h-24 bg-blue-300"></div>
-            <div class="w-24 h-24 bg-purple-500"></div>
-            <div class="w-24 h-24 bg-orange-500"></div>
-            <div class="w-24 h-24 bg-blue-300"></div>
-            <div class="w-24 h-24 bg-purple-500"></div>
-            <div class="w-24 h-24 bg-orange-500"></div>
-            <div class="w-24 h-24 bg-blue-300"></div>
-            <div class="w-24 h-24 bg-purple-500"></div>
-            <div class="w-24 h-24 bg-orange-500"></div>
-            <div class="w-24 h-24 bg-blue-300"></div>
-            <div class="w-24 h-24 bg-purple-500"></div>
-            <div class="w-24 h-24 bg-orange-500"></div>
-            <div class="w-24 h-24 bg-blue-300"></div>
-            <div class="w-24 h-24 bg-purple-500"></div>
-            <div class="w-24 h-24 bg-orange-500"></div>
-            <div class="w-24 h-24 bg-blue-300"></div>
-            <div class="w-24 h-24 bg-purple-500"></div>
-            <div class="w-24 h-24 bg-orange-500"></div>
-        </div>
-
+        {offres.map((offre) => 
+        <ul>{offre.nomMaison}</ul>  
+            )}
     </div>
+
 </Base>
