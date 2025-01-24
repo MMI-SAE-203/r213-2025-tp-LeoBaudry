@@ -49,16 +49,12 @@ const offres = [
         </button>
     
         <div x-show="!showFavorites">
-            <template x-for="offre in offres" :key="offre.id">
-                <Card :offre="offre" />
-            </template>
+            {offres.map((offre) => <Card {...offre} />)}
         </div>
 
-    <div>
-        {offres.map((offre) => 
-            <Card {...offre} />
-            )}
-
-
+        <div x-show="showFavorites">
+            {offres.map((offre) => offre.favori && <Card {...offre} />)}
+        </div>
+    </div>
 
 </Base>
