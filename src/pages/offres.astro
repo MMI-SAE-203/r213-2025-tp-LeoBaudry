@@ -1,6 +1,7 @@
 ---
 import { late } from 'astro:schema'
 import Base from '../layouts/Base.astro'
+import Card from '../components/Card.astro'
 const offres = [
     {
         "adresse": "2821 Lake Sevilla, Palm Harbor, TX",
@@ -11,7 +12,7 @@ const offres = [
         "nomMaison": "Beverly Springfield",
         "prix": 2700,
         "surface": 45,
-        "imgUrl": "image1.png"
+        "imgUrl": "/image1.jpg"
     },
     {
         "adresse": "2699 Green Valley, Highland Lake",
@@ -22,7 +23,7 @@ const offres = [
         "nomMaison": "Palm Harbor",
         "prix": 2095,
         "surface": 42,
-        "imgUrl": "image2.png"
+        "imgUrl": "/image2.jpg"
     },
     {
         "adresse": "909 Woodland St, Michigan, IN",
@@ -33,7 +34,7 @@ const offres = [
         "nomMaison": "Faulkner Ave",
         "prix": 4550,
         "surface": 80,
-        "imgUrl": "image3.png"
+        "imgUrl": "/image3.jpg"
     }
 ]
 ---
@@ -41,10 +42,23 @@ const offres = [
 <Base titre="Accueil">
     <h1 class="text-6xl text-center">Offres</h1>   
     
+    <div x-data="{ showFavorites: false }">
+        <button @click="showFavorites = !showFavorites">
+            <span x-show="!showFavorites">Afficher les favoris⭐</span>
+            <span x-show="showFavorites">Afficher tout 🏚️</span>
+        </button>
+    
+        <div x-show="!showFavorites">
+            <template x-for="offre in offres" :key="offre.id">
+                <Card :offre="offre" />
+            </template>
+        </div>
+
     <div>
         {offres.map((offre) => 
-        <ul>{offre.nomMaison}</ul>  
+            <Card {...offre} />
             )}
-    </div>
+
+
 
 </Base>

@@ -1,0 +1,17 @@
+---
+const { ...offre } = Astro.props;
+---
+
+<div class="p-2 grid">
+    <div class="grid grid-cols-3 justify-content-center">
+      <img class="max-w-d bg-blue-100 p-5" src={offre.imgUrl} alt="">
+      <ul class="bg-blue-50 p-5">
+        <li>{offre.nomMaison}</li>
+        <li>{offre.adresse}</li>
+        <li>{offre.prix} €</li>
+        <li>{offre.nbChambres} Chambres</li>
+        <li>{offre.nbSdb} Salles de bain</li>
+        <li>{offre.surface} m²</li>
+      </ul>  
+    </div>
+  </div>
