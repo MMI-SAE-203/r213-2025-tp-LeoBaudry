@@ -1,17 +1,18 @@
----
-const { ...offre } = Astro.props;
+--- 
+const { ...offre } = Astro.props; 
 ---
 
 <div class="p-2 grid">
-    <div class="grid grid-cols-3 justify-content-center">
-      <img class="max-w-d bg-blue-100 p-5" src={offre.imgUrl} alt="">
-      <ul class="bg-blue-50 p-5">
-        <li>{offre.nomMaison}</li>
-        <li>{offre.adresse}</li>
-        <li>{offre.prix} €</li>
-        <li>{offre.nbChambres} Chambres</li>
-        <li>{offre.nbSdb} Salles de bain</li>
-        <li>{offre.surface} m²</li>
-      </ul>  
-    </div>
+  <div class="grid grid-cols-3 justify-content-center">
+    <img class="max-w-d bg-blue-100 p-1 transition-transform duration-300 ease-in-out transform hover:scale-105 rounded-lg" src={offre.imgUrl} alt="">
+
+    <ul class="bg-blue-50 p-5 rounded-lg pl-5">
+    <li class="font-bold text-lg pb-5">{offre.nomMaison}</li>
+    <li class="text-gray-700 pb-2">{offre.adresse}</li>
+    <li class="text-green-600 font-bold">{offre.prix} €</li>
+    <li class="text-gray-700">{offre.nbChambres} Chambres</li>
+    <li class="text-gray-700">{offre.nbSdb} Salles de bain</li>
+    <li class="text-gray-700 pt-5">{offre.surface} m²</li>
+    </ul>  
   </div>
+</div>
