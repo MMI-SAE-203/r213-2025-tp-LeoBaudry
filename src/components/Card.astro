@@ -7,7 +7,10 @@ const { ...offre } = Astro.props;
     <img class="max-w-d bg-blue-100 p-1 transition-transform duration-300 ease-in-out transform hover:scale-105 rounded-lg" src={offre.imgUrl} alt="">
 
     <ul class="bg-blue-50 p-5 rounded-lg pl-5">
-    <li class="font-bold text-lg pb-5">{offre.nomMaison}</li>
+        <li class="font-bold text-lg pb-5 flex items-center">
+            {offre.favori && <span class="text-yellow-500 text-xl mr-2">⭐</span>}
+            {offre.nomMaison}
+          </li>
     <li class="text-gray-700 pb-2">{offre.adresse}</li>
     <li class="text-green-600 font-bold">{offre.prix} €</li>
     <li class="text-gray-700">{offre.nbChambres} Chambres</li>
@@ -16,3 +19,4 @@ const { ...offre } = Astro.props;
     </ul>  
   </div>
 </div>
+
