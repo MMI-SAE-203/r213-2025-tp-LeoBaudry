@@ -8,5 +8,6 @@ export default {
 		sans: ['Plus Jakarta Sans', 'sans-serif'],
 	},
 	plugins: [],
+	
 }
 
