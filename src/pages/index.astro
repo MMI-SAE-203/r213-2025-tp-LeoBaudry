@@ -13,18 +13,15 @@ const offresFavorites = offres.filter(offre => offre.favori === true);
 <Base titre="Accueil">
     <h1 class="text-6xl text-center">Accueil</h1>
 
-    <!-- Afficher les offres favorites -->
     <div class="p-4">
         <h2 class="text-4xl text-center mb-8">Nos offres favorites ⭐</h2>
-
-        <!-- Conteneur des cartes -->
+        
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {offresFavorites.map((offre) => (
                 <Card {...offre} />
             ))}
         </div>
 
-        <!-- Message si aucune offre favorite -->
         {offresFavorites.length === 0 && (
             <p class="text-center text-gray-500 mt-8">Aucune offre favorite pour le moment.</p>
         )}
