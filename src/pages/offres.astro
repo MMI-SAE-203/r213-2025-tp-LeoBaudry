@@ -11,69 +11,71 @@ const offres = await allMaisons();
     <h1 class="text-6xl text-center">Offres</h1>
 
     <div x-data="{ showFavorites: false, column: false }" class="flex flex-col items-start space-y-4 p-4">
-        <!-- Conteneur pour les boutons -->
-        <div class="flex flex-col sm:flex-row gap-4">
-            <!-- Bouton pour basculer entre grid et flex -->
-            <button
-                @click="column = !column"
-                class="relative p-6 bg-blue-500 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600 shadow-md w-auto min-w-[200px] flex justify-center items-center"
-            >
-                <span
-                    x-show="!column"
-                    x-transition:enter="transition-all duration-500 transform ease-in-out"
-                    x-transition:enter-start="scale-95 opacity-0 translate-x-4"
-                    x-transition:enter-end="scale-100 opacity-100 translate-x-0"
-                    x-transition:leave="transition-all duration-500 ease-in-out transform"
-                    x-transition:leave-start="scale-100 opacity-100 translate-x-0"
-                    x-transition:leave-end="scale-95 opacity-0 translate-x-4"
-                    class="absolute transition-all transform"
+        <!-- Conteneur pour les boutons (sticky) -->
+        <div class="sticky top-0 bg-white z-10 py-4 w-full">
+            <div class="flex flex-col sm:flex-row gap-4">
+                <!-- Bouton pour basculer entre grid et flex -->
+                <button
+                    @click="column = !column"
+                    class="relative p-6 bg-blue-500 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600 shadow-md w-auto min-w-[200px] flex justify-center items-center"
                 >
-                    Affichage en colonne
-                </span>
-                <span
-                    x-show="column"
-                    x-transition:enter="transition-all duration-500 transform ease-in-out"
-                    x-transition:enter-start="scale-95 opacity-0 -translate-x-4"
-                    x-transition:enter-end="scale-100 opacity-100 translate-x-0"
-                    x-transition:leave="transition-all duration-500 ease-in-out transform"
-                    x-transition:leave-start="scale-100 opacity-100 translate-x-0"
-                    x-transition:leave-end="scale-95 opacity-0 -translate-x-4"
-                    class="absolute transition-all transform"
-                >
-                    Affichage en ligne
-                </span>
-            </button>
+                    <span
+                        x-show="!column"
+                        x-transition:enter="transition-all duration-500 transform ease-in-out"
+                        x-transition:enter-start="scale-95 opacity-0 translate-x-4"
+                        x-transition:enter-end="scale-100 opacity-100 translate-x-0"
+                        x-transition:leave="transition-all duration-500 ease-in-out transform"
+                        x-transition:leave-start="scale-100 opacity-100 translate-x-0"
+                        x-transition:leave-end="scale-95 opacity-0 translate-x-4"
+                        class="absolute transition-all transform"
+                    >
+                        Affichage en colonne
+                    </span>
+                    <span
+                        x-show="column"
+                        x-transition:enter="transition-all duration-500 transform ease-in-out"
+                        x-transition:enter-start="scale-95 opacity-0 -translate-x-4"
+                        x-transition:enter-end="scale-100 opacity-100 translate-x-0"
+                        x-transition:leave="transition-all duration-500 ease-in-out transform"
+                        x-transition:leave-start="scale-100 opacity-100 translate-x-0"
+                        x-transition:leave-end="scale-95 opacity-0 -translate-x-4"
+                        class="absolute transition-all transform"
+                    >
+                        Affichage en ligne
+                    </span>
+                </button>
 
-            <!-- Bouton pour afficher les favoris -->
-            <button
-                @click="showFavorites = !showFavorites"
-                class="relative p-6 bg-blue-500 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600 shadow-md w-auto min-w-[200px] flex justify-center items-center"
-            >
-                <span
-                    x-show="!showFavorites"
-                    x-transition:enter="transition-all duration-500 transform ease-in-out"
-                    x-transition:enter-start="scale-95 opacity-0 translate-x-4"
-                    x-transition:enter-end="scale-100 opacity-100 translate-x-0"
-                    x-transition:leave="transition-all duration-500 ease-in-out transform"
-                    x-transition:leave-start="scale-100 opacity-100 translate-x-0"
-                    x-transition:leave-end="scale-95 opacity-0 translate-x-4"
-                    class="absolute transition-all transform"
+                <!-- Bouton pour afficher les favoris -->
+                <button
+                    @click="showFavorites = !showFavorites"
+                    class="relative p-6 bg-blue-500 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600 shadow-md w-auto min-w-[200px] flex justify-center items-center"
                 >
-                    Afficher les favoris⭐
-                </span>
-                <span
-                    x-show="showFavorites"
-                    x-transition:enter="transition-all duration-500 transform ease-in-out"
-                    x-transition:enter-start="scale-95 opacity-0 -translate-x-4"
-                    x-transition:enter-end="scale-100 opacity-100 translate-x-0"
-                    x-transition:leave="transition-all duration-500 ease-in-out transform"
-                    x-transition:leave-start="scale-100 opacity-100 translate-x-0"
-                    x-transition:leave-end="scale-95 opacity-0 -translate-x-4"
-                    class="absolute transition-all transform"
-                >
-                    Afficher tout 🏚️
-                </span>
-            </button>
+                    <span
+                        x-show="!showFavorites"
+                        x-transition:enter="transition-all duration-500 transform ease-in-out"
+                        x-transition:enter-start="scale-95 opacity-0 translate-x-4"
+                        x-transition:enter-end="scale-100 opacity-100 translate-x-0"
+                        x-transition:leave="transition-all duration-500 ease-in-out transform"
+                        x-transition:leave-start="scale-100 opacity-100 translate-x-0"
+                        x-transition:leave-end="scale-95 opacity-0 translate-x-4"
+                        class="absolute transition-all transform"
+                    >
+                        Afficher les favoris⭐
+                    </span>
+                    <span
+                        x-show="showFavorites"
+                        x-transition:enter="transition-all duration-500 transform ease-in-out"
+                        x-transition:enter-start="scale-95 opacity-0 -translate-x-4"
+                        x-transition:enter-end="scale-100 opacity-100 translate-x-0"
+                        x-transition:leave="transition-all duration-500 ease-in-out transform"
+                        x-transition:leave-start="scale-100 opacity-100 translate-x-0"
+                        x-transition:leave-end="scale-95 opacity-0 -translate-x-4"
+                        class="absolute transition-all transform"
+                    >
+                        Afficher tout 🏚️
+                    </span>
+                </button>
+            </div>
         </div>
 
         <!-- Conteneur des cartes -->
