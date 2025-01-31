@@ -85,7 +85,7 @@ const offres = await allMaisons();
             class="w-full"
         >
             {offres.map((offre) => (
-                <Card {...offre} :column="column" />
+                <Card {...offre}  />
             ))}
         </div>
 
@@ -97,7 +97,7 @@ const offres = await allMaisons();
             x-transition:enter="transition-opacity duration-500"
             x-transition:leave="transition-opacity duration-500"
         >
-            {offres.map((offre) => offre.favori && <Card {...offre} :column="column" />)}
+            {offres.map((offre) => offre.favori && <Card {...offre}  />)}
         </div>
     </div>
 </Base>
