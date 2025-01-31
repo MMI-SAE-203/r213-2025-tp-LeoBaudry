@@ -1,77 +1,75 @@
 ---
-import { late } from 'astro:schema'
-import Base from '../layouts/Base.astro'
-import Card from '../components/Card.astro'
-const offres = [
-    {
-        "adresse": "2821 Lake Sevilla, Palm Harbor, TX",
-        "favori": true,
-        "id": "64l3n8nar836i5j",
-        "nbChambres": 4,
-        "nbSdb": 2,
-        "nomMaison": "Beverly Springfield",
-        "prix": 2700,
-        "surface": 45,
-        "imgUrl": "/image1.jpg"
-    },
-    {
-        "adresse": "2699 Green Valley, Highland Lake",
-        "favori": true,
-        "id": "lo831zeg10hpm9y",
-        "nbChambres": 4,
-        "nbSdb": 2,
-        "nomMaison": "Palm Harbor",
-        "prix": 2095,
-        "surface": 42,
-        "imgUrl": "/image2.jpg"
-    },
-    {
-        "adresse": "909 Woodland St, Michigan, IN",
-        "favori": false,
-        "id": "s1zuhj19x8eb242",
-        "nbChambres": 4,
-        "nbSdb": 3,
-        "nomMaison": "Faulkner Ave",
-        "prix": 4550,
-        "surface": 80,
-        "imgUrl": "/image3.jpg"
-    }
-]
+import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
+import { allMaisons } from '../backend.mjs';
+
+// Récupérer les offres
+const offres = await allMaisons();
 ---
 
-<Base titre="Accueil">
-    <h1 class="text-6xl text-center">Offres</h1>   
-    
-    <div x-data="{ showFavorites: false }">
-        <button @click="showFavorites = !showFavorites" 
-        class="relative p-6 bg-blue-500 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600 shadow-md w-auto min-w-[200px] flex justify-center items-center">
-        
-        <span x-show="!showFavorites" 
-            x-transition:enter="transition-all duration-500 transform ease-in-out"
-            x-transition:enter-start="scale-95 opacity-0 translate-x-4"
-            x-transition:enter-end="scale-100 opacity-100 translate-x-0"
-            x-transition:leave="transition-all duration-500 ease-in-out transform"
-            x-transition:leave-start="scale-100 opacity-100 translate-x-0"
-            x-transition:leave-end="scale-95 opacity-0 translate-x-4"
-            class="absolute transition-all transform">Afficher les favoris⭐</span>
-        
-        <span x-show="showFavorites" 
-            x-transition:enter="transition-all duration-500 transform ease-in-out"
-            x-transition:enter-start="scale-95 opacity-0 -translate-x-4"
-            x-transition:enter-end="scale-100 opacity-100 translate-x-0"
-            x-transition:leave="transition-all duration-500 ease-in-out transform"
-            x-transition:leave-start="scale-100 opacity-100 translate-x-0"
-            x-transition:leave-end="scale-95 opacity-0 -translate-x-4"
-            class="absolute transition-all transform">Afficher tout 🏚️</span>
-    </button>
-    
-        <div x-show="!showFavorites">
-            {offres.map((offre) => <Card {...offre} />)}
+<Base titre="Offres">
+    <h1 class="text-6xl text-center">Offres</h1>
+
+    <div x-data="{ showFavorites: false, column: false }" class="flex flex-col items-center space-y-4">
+        <!-- Bouton pour basculer entre grid et flex -->
+        <button
+            @click="column = !column"
+            class="relative p-6 bg-blue-500 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600 shadow-md w-auto min-w-[200px] flex justify-center items-center"
+        >
+            <span x-text="column ? 'Mode Flex' : 'Mode Grille'"></span>
+        </button>
+
+        <!-- Bouton pour afficher les favoris -->
+        <button
+            @click="showFavorites = !showFavorites"
+            class="relative p-6 bg-blue-500 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-blue-600 shadow-md w-auto min-w-[200px] flex justify-center items-center"
+        >
+            <span
+                x-show="!showFavorites"
+                x-transition:enter="transition-all duration-500 transform ease-in-out"
+                x-transition:enter-start="scale-95 opacity-0 translate-x-4"
+                x-transition:enter-end="scale-100 opacity-100 translate-x-0"
+                x-transition:leave="transition-all duration-500 ease-in-out transform"
+                x-transition:leave-start="scale-100 opacity-100 translate-x-0"
+                x-transition:leave-end="scale-95 opacity-0 translate-x-4"
+                class="absolute transition-all transform"
+            >
+                Afficher les favoris⭐
+            </span>
+            <span
+                x-show="showFavorites"
+                x-transition:enter="transition-all duration-500 transform ease-in-out"
+                x-transition:enter-start="scale-95 opacity-0 -translate-x-4"
+                x-transition:enter-end="scale-100 opacity-100 translate-x-0"
+                x-transition:leave="transition-all duration-500 ease-in-out transform"
+                x-transition:leave-start="scale-100 opacity-100 translate-x-0"
+                x-transition:leave-end="scale-95 opacity-0 -translate-x-4"
+                class="absolute transition-all transform"
+            >
+                Afficher tout 🏚️
+            </span>
+        </button>
+
+        <!-- Conteneur des cartes -->
+        <div
+            x-show="!showFavorites"
+            :class="column ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'flex flex-col gap-6'"
+            class="w-full"
+        >
+            {offres.map((offre) => (
+                <Card {...offre} :column="column" />
+            ))}
         </div>
 
-        <div x-show="showFavorites" x-transition:enter="transition-opacity duration-500" x-transition:leave="transition-opacity duration-500">
-            {offres.map((offre) => offre.favori && <Card {...offre} />)}
+        <!-- Conteneur des favoris -->
+        <div
+            x-show="showFavorites"
+            :class="column ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'flex flex-col gap-6'"
+            class="w-full"
+            x-transition:enter="transition-opacity duration-500"
+            x-transition:leave="transition-opacity duration-500"
+        >
+            {offres.map((offre) => offre.favori && <Card {...offre} :column="column" />)}
         </div>
     </div>
-
 </Base>
