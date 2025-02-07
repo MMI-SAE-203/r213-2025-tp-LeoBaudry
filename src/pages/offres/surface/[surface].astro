@@ -1,0 +1,32 @@
+---
+import { allMaisons } from '../../../backend.mjs';
+import Base from '../../../layouts/Base.astro';
+
+const { surface } = Astro.params;
+const minSurface = parseInt(surface, 10);
+
+// Récupération de toutes les maisons
+const offres = await allMaisons();
+
+// Filtrage des maisons ayant une surface supérieure à minSurface
+const offresFiltrees = offres.filter(offre => offre.surface > minSurface);
+---
+
+<Base titre={`Maisons de plus de ${minSurface} m²`}>
+    <h2>Maisons de plus de {minSurface} m²</h2>
+
+    {offresFiltrees.length > 0 ? (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+            {offresFiltrees.map(offre => (
+            <a href={`/offres/${offre.id}`} class="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4">
+                <img src={offre.imgUrl} alt={offre.nomMaison} class="w-full h-48 object-cover rounded-t-lg mb-3"/>
+                <div class="text-lg font-semibold text-gray-800">
+                {offre.nomMaison} - {offre.surface} m²
+                </div>
+            </a>
+            ))}
+        </div>
+    ) : (
+        <p>Aucune maison ne correspond à cette surface.</p>
+    )}
+</Base>
