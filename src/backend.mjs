@@ -87,3 +87,15 @@ export async function sortByNbSdb() {
     });
     return records;
 }
+
+////////////////////////// TP 4 //////////////////////////
+export async function getOffre(id) {
+    try {
+        let data = await pb.collection('Maison').getOne(id);
+        data.imageUrl = pb.files.getURL(data, data.images[0]);
+        return data;
+    } catch (error) {
+        console.log('Une erreur est survenue en lisant la maison', error);
+        return null;
+    }
+}

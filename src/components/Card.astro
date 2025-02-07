@@ -26,6 +26,7 @@ const { ...offre } = Astro.props;
         <li class="text-gray-700">{offre.nbChambres} Chambres</li>
         <li class="text-gray-700">{offre.nbSdb} Salles de bain</li>
         <li class="text-gray-700 pt-5">{offre.surface} m²</li>
+        <a href={`/offres/${offre.id}`} class="inline-block mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Voir plus</a>
       </ul>
     </div>
   </div>
