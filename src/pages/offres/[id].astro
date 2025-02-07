@@ -3,16 +3,37 @@ import { getOffre } from '../../backend.mjs';
 import Base  from '../../layouts/Base.astro';
 
 const { id } = Astro.params;
+
 const offre = await getOffre(id);
+console.log("offre", offre);
+
 if(!offre){
    return Astro.redirect('/offres');
 }
 ---
 
 <Base titre={offre.nomMaison}>
-    <h2>{offre.nomMaison}</h2>
-    <ul>
-        <li>{offre.adresse}</li>
-        ...
+    <h2 class="text-6xl font-bold mb-4">{offre.nomMaison}</h2>
+    <img src={offre.imageUrl} alt={offre.nomMaison} class="w-full max-w-4xl max-h-[32rem] object-cover rounded-lg mb-6">
+    <p class="text-4xl font-bold text-green-600 mb-4">{offre.prix} €</p>
+    <ul class="space-y-4 mb-6">
+        <li class="text-xl">Situé à : <br> {offre.adresse}</li>
+        <div class="mt-4">
+            <p class="font-medium mb-2">Dispose de :</p>
+            <div class="ml-4 space-y-1">
+                <li>{offre.nbChambres} chambres,</li>
+                <li>{offre.nbSdb} salles de bain.</li>
+            </div>
+        </div>
     </ul>
+    <p class="text-lg mb-3">Surface totale de {offre.surface} m²</p>
+    <div class="bg-blue-50 p-6 rounded-lg shadow-md">
+        <Fragment set:html={offre.description_maison}/>
+    </div>  
+    <div class="flex justify-center mt-6">
+        <a href="/offres" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
+            Retour aux offres
+        </a>
+    </div>
+
 </Base>

@@ -93,6 +93,8 @@ export async function getOffre(id) {
     try {
         let data = await pb.collection('Maison').getOne(id);
         data.imageUrl = pb.files.getURL(data, data.images[0]);
+        //console.log('Offre récupérée :', data);
+        
         return data;
     } catch (error) {
         console.log('Une erreur est survenue en lisant la maison', error);
