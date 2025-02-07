@@ -13,7 +13,8 @@ const offresFiltrees = offres.filter(offre => offre.surface > minSurface);
 ---
 
 <Base titre={`Maisons de plus de ${minSurface} m²`}>
-    <h2>Maisons de plus de {minSurface} m²</h2>
+    <h2 class="text-6xl text-center">Maisons de plus de {minSurface} m²</h2>
+
 
     {offresFiltrees.length > 0 ? (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
