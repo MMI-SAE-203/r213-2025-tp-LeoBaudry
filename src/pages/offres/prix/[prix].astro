@@ -2,19 +2,18 @@
 import { allMaisons } from '../../../backend.mjs';
 import Base from '../../../layouts/Base.astro';
 
-const { surface } = Astro.params;
-const minSurface = parseInt(surface, 10);
+const { prix } = Astro.params;
+const maxPrix = parseInt(prix, 10);
 
 // Récupération de toutes les maisons
 const offres = await allMaisons();
 
-// Filtrage des maisons ayant une surface supérieure à minSurface
-const offresFiltrees = offres.filter(offre => offre.surface > minSurface);
+// Filtrage des maisons ayant un prix inférieur ou égal à maxPrix
+const offresFiltrees = offres.filter(offre => offre.prix <= maxPrix);
 ---
 
-<Base titre={`Maisons de plus de ${minSurface} m²`}>
-    <h2 class="text-6xl text-center">Maisons de plus de {minSurface} m²</h2>
-
+<Base titre={`Maisons à moins de ${maxPrix} €`}>
+    <h2 class="text-6xl text-center">Maisons à moins de {maxPrix} €</h2>
 
     {offresFiltrees.length > 0 ? (
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-4 w-full">
@@ -22,12 +21,12 @@ const offresFiltrees = offres.filter(offre => offre.surface > minSurface);
             <a href={`/offres/${offre.id}`} class="block bg-blue-50 rounded-lg shadow-md hover:shadow-lg transition-shadow p-4">
             <img src={offre.imgUrl} alt={offre.nomMaison} class="w-full h-48 object-cover rounded-t-lg mb-3"/>
             <div class="text-lg font-semibold text-gray-800">
-            {offre.nomMaison} - {offre.surface} m²
+            {offre.nomMaison} - {offre.prix} €
             </div>
             </a>
-            ))}
-        </div>
-    ) : (
-        <p>Aucune maison ne correspond à cette surface.</p>
+        ))}
+    </div>
+       ) : (
+        <p>Aucune maison ne correspond ces tarifs.</p>
     )}
 </Base>
