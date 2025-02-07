@@ -20,7 +20,7 @@ const offresFiltrees = offres.filter(offre => offre.prix >= min && offre.prix <=
             <a href={`/offres/${offre.id}`} class="block bg-blue-50 rounded-lg shadow-md hover:shadow-lg transition-shadow p-4">
             <img src={offre.imgUrl} alt={offre.nomMaison} class="w-full h-48 object-cover rounded-t-lg mb-3"/>
             <div class="text-lg font-semibold text-gray-800">
-            {offre.nomMaison} - {offre.prix} €
+            <span class="italic text-3xl">{offre.nomMaison}</span> - <span class="font-bold text-green-600 text-3xl">{offre.prix} €</span>
             </div>
             </a>
         ))}
@@ -28,4 +28,10 @@ const offresFiltrees = offres.filter(offre => offre.prix >= min && offre.prix <=
        ) : (
         <p>Aucune maison ne correspond ces tarifs.</p>
     )}
+
+<div class="flex justify-center mt-6">
+    <a href="/offres" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
+        Retour aux offres
+    </a>
+</div>
 </Base>
