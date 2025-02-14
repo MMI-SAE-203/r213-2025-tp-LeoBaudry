@@ -13,37 +13,50 @@ if (Astro.request.method === "POST") {
 ---
 
 <Base titre="Ajouter un événement">
-    <div class="flex justify-center items-center min-h-screen">
-        <div class="w-full max-w-2xl">
-            <h1 class="text-lg">Ajouter une offre</h1>
-            <form action="/offres/add" method="POST" enctype="multipart/form-data" class="space-y-4">
-                <div>
+    <div class="min-h-screen bg-gradient-to-br from-cyan-50 to-blue-500 py-12 px-4 animate-gradient">
+        <style>
+            .animate-gradient {
+                background: linear-gradient(270deg, #76d8e6, #96e080);
+                background-size: 400% 400%;
+                animation: gradient 15s ease infinite;
+            }
+            @keyframes gradient {
+                0% { background-position: 0% 50% }
+                50% { background-position: 100% 50% }
+                100% { background-position: 0% 50% }
+            }
+        </style>
+        <div class="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-lg">
+            <h1 class="text-2xl font-semibold text-cyan-800 mb-8 text-center">Ajouter une offre</h1>
+            
+            <form action="/offres/add" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <div class="space-y-4">
                     <input type="text" name="nomMaison" placeholder="Nom de la maison" required 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                </div>
-                <div>
+                        class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 transition duration-200 bg-gray-50" />
+                    
                     <input type="number" name="prix" placeholder="Prix" 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500" />
-                </div>
-                <div>
-                    <input type="number" name="nbSdb" placeholder="Nombre de salles de bain" 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500" />
-                </div>
-                <div>
-                    <input type="number" name="nbChambres" placeholder="Nombre de chambres" 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500" />
-                </div>
-                <div>
+                        class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 transition duration-200 bg-gray-50" />
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="number" name="nbSdb" placeholder="Nombre de salles de bain" 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 transition duration-200 bg-gray-50" />
+                        
+                        <input type="number" name="nbChambres" placeholder="Nombre de chambres" 
+                            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 transition duration-200 bg-gray-50" />
+                    </div>
+                    
                     <input type="number" name="surface" placeholder="Superficie" 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500" />
+                        class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-200 transition duration-200 bg-gray-50" />
+                    
+                    <div class="border-2 border-dashed border-gray-200 rounded-lg p-4 text-center">
+                        <input type="file" name="images" 
+                            class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-cyan-50 file:text-cyan-700 hover:file:bg-cyan-100" />
+                    </div>
                 </div>
-                <div>
-                    <input type="file" name="images" 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500" />
-                </div>
+
                 <button type="submit" 
-                    class="w-full px-4 py-2 text-white bg-cyan-500 rounded-md hover:bg-cyan-600 focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                    Ajouter
+                    class="w-full py-3 px-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-medium rounded-lg hover:opacity-90 transition duration-200 transform hover:scale-[1.02]">
+                    Ajouter l'offre
                 </button>
             </form>
         </div>

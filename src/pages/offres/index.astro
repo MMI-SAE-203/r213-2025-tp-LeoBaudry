@@ -3,30 +3,56 @@ import Base from '../../layouts/Base.astro';
 import Card from '../../components/Card.astro';
 import { allMaisons, getOffre, filterByPrix } from '../../backend.mjs';
 
-// Récupérer les offres
 let message = '';
 let offres = [];
+let isValid = true;
+
+const formatPrix = (prix) => {
+    return prix.toLocaleString('fr-FR');
+};
+
 if (Astro.request.method === "POST") {
     const data = await Astro.request.formData();
     const minPrix = parseInt(data.get("minPrix") as string);
     const maxPrix = parseInt(data.get("maxPrix") as string);
 
-    if (minPrix > 0 && maxPrix > 0 && maxPrix > minPrix) {
-        offres = await filterByPrix(minPrix, maxPrix);
-		if(offres.length === 0) {
-			message = `Pas d'offres entre ${minPrix}€ et ${maxPrix}€`;
-		} else {
-        	message = `Liste des offres entre ${minPrix}€ et ${maxPrix}€`
-		}
-    } else {
-        message = "Veuillez entrer des valeurs valides pour le prix.";
+    // console.log('Valeur minPrix:', minPrix);  
+    // console.log('Valeur maxPrix:', maxPrix);  
+
+    // Vérification si les deux champs de prix sont remplis
+    if (!minPrix || !maxPrix) {
+        message = "Veuillez remplir les deux champs de prix pour filtrer les offres.";
         offres = await allMaisons();
+        isValid = false;
+    } else if (isNaN(minPrix) || isNaN(maxPrix)) {
+        message = "Veuillez entrer des valeurs numériques valides pour le prix.";
+        isValid = false;
+    } else if (minPrix < 0) {
+        message = "Le prix minimum ne peut pas être inférieur à 0 €.";
+        isValid = false;
+    } else if (maxPrix > 15000000) {
+        message = "Le prix maximum ne doit pas dépasser 15 000 000 €.";
+        isValid = false;
+    } else if (maxPrix <= minPrix) {
+        message = "Le prix maximum doit être supérieur au prix minimum.";
+        isValid = false;
+    } else if (maxPrix - minPrix < 100) {
+        message = "La plage de prix doit être d'au moins 100 €.";
+        isValid = false;
+    } else {
+        offres = await filterByPrix(minPrix, maxPrix);
+        if (offres.length === 0) {
+            message = `Pas d'offres entre ${formatPrix(minPrix)}€ et ${formatPrix(maxPrix)}€`;
+        } else {
+            message = `Liste des offres entre ${formatPrix(minPrix)}€ et ${formatPrix(maxPrix)}€`;
+        }
     }
 } else {
     offres = await allMaisons();
     console.log("Offres récupérées : ", offres);
 }
 ---
+
 
 <Base titre="Offres">
     <h1 class="text-6xl text-center">Offres</h1>
@@ -38,6 +64,13 @@ if (Astro.request.method === "POST") {
             <input type="submit" value="Filtrer par prix 💶" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 cursor-pointer" />
         </form>
     </div>
+
+    <!-- Affichage du message d'erreur ou d'information -->
+    {message && (
+        <div class={isValid ? "text-green-500 text-left my-4" : "text-red-500 text-left my-4"}>
+            <p>{message}</p>
+        </div>
+    )}
 
     <div x-data="{ showFavorites: false, column: false }" class="flex flex-col items-start space-y-4 p-4">
         <!-- Conteneur pour les boutons (sticky) -->
@@ -98,7 +131,7 @@ if (Astro.request.method === "POST") {
                         x-transition:enter-end="scale-100 opacity-100 translate-x-0"
                         x-transition:leave="transition-all duration-500 ease-in-out transform"
                         x-transition:leave-start="scale-100 opacity-100 translate-x-0"
-                        x-transition:leave-end="scale-95 opacity-0 -translate-x-4"
+                        x-transition:leave-end="scale-95 opacity-0 translate-x-4"
                         class="absolute transition-all transform"
                     >
                         Afficher tout 🏚️
@@ -127,8 +160,6 @@ if (Astro.request.method === "POST") {
             bg-cyan-500 text-white rounded-lg transition-all duration-300 ease-in-out hover:bg-cyan-600 shadow-md w-full sm:w-auto min-w-[200px] flex justify-center items-center">
             Ajouter un événement</a>
         </div>
-
-
 
         <!-- Conteneur des cartes -->
         <div
