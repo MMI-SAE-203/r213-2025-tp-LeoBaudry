@@ -1,6 +1,7 @@
 ---
-import Base from "../../layouts/Base.astro";
 import { addOffre } from "../../backend.mjs"
+import Base from "../../layouts/Base.astro";
+
 
 
 let message = '';
@@ -11,7 +12,7 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<Base title="Ajouter un événement">
+<Base titre="Ajouter un événement">
     <div class="flex justify-center items-center min-h-screen">
         <div class="w-full max-w-2xl">
             <h1 class="text-lg">Ajouter une offre</h1>

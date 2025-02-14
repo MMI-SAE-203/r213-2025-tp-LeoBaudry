@@ -3,8 +3,8 @@ import { allMaisons } from '../../../backend.mjs';
 import Base from '../../../layouts/Base.astro';
 
 const { minPrix, maxPrix } = Astro.params;
-const min = parseInt(minPrix, 10);
-const max = parseInt(maxPrix, 10);
+const min = parseInt((minPrix, 350000)) ;
+const max = parseInt((maxPrix, 10000000));
 
 const offres = await allMaisons();
 

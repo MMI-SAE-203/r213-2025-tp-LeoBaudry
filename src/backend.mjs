@@ -104,7 +104,6 @@ export async function getOffre(id) {
 
 ///////////////// TP 5 
 
-
 export async function addOffre(house) {
     try {
         await pb.collection('maison').create(house);
@@ -118,5 +117,29 @@ export async function addOffre(house) {
             success: false,
             message: 'Une erreur est survenue en ajoutant la maison'
         };
+    }
+}
+
+export async function filterByPrix(prixMin, prixMax) {
+    try {
+        let data = await pb.collection('Maison').getFullList({ 
+            sort: '-created',
+            filter: `prix >= ${prixMin} && prix <= ${prixMax}`
+        });
+
+        // Vérification des images
+        data = data.map((maison) => {
+            if (maison.images && maison.images.length > 0) {
+                maison.imgUrl = pb.files.getURL(maison, maison.images[0]);
+            } else {
+                maison.imgUrl = '/images/default-house.jpg'; // Image par défaut
+            }
+            return maison;
+        });
+
+        return data;
+    } catch (error) {
+        console.log('Erreur en filtrant par prix', error);
+        return [];
     }
 }

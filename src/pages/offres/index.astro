@@ -1,14 +1,43 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Card from '../../components/Card.astro';
-import { allMaisons } from '../../backend.mjs';
+import { allMaisons, getOffre, filterByPrix } from '../../backend.mjs';
 
 // Récupérer les offres
-const offres = await allMaisons();
+let message = '';
+let offres = [];
+if (Astro.request.method === "POST") {
+    const data = await Astro.request.formData();
+    const minPrix = parseInt(data.get("minPrix") as string);
+    const maxPrix = parseInt(data.get("maxPrix") as string);
+
+    if (minPrix > 0 && maxPrix > 0 && maxPrix > minPrix) {
+        offres = await filterByPrix(minPrix, maxPrix);
+		if(offres.length === 0) {
+			message = `Pas d'offres entre ${minPrix}€ et ${maxPrix}€`;
+		} else {
+        	message = `Liste des offres entre ${minPrix}€ et ${maxPrix}€`
+		}
+    } else {
+        message = "Veuillez entrer des valeurs valides pour le prix.";
+        offres = await allMaisons();
+    }
+} else {
+    offres = await allMaisons();
+    console.log("Offres récupérées : ", offres);
+}
 ---
 
 <Base titre="Offres">
     <h1 class="text-6xl text-center">Offres</h1>
+
+    <div>
+        <form action="/offres" method="POST">
+            <input type="number" name="minPrix" placeholder="Prix minimum" />
+            <input type="number" name="maxPrix" placeholder="Prix maximum" />
+            <input type="submit" value="Filtrer par prix 💶" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 cursor-pointer" />
+        </form>
+    </div>
 
     <div x-data="{ showFavorites: false, column: false }" class="flex flex-col items-start space-y-4 p-4">
         <!-- Conteneur pour les boutons (sticky) -->
