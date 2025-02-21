@@ -17,9 +17,14 @@ const { ...offre } = Astro.props;
     <!-- Texte -->
     <div class="w-full sm:w-1/2 p-5 flex flex-col justify-between bg-blue-50">
       <ul class="space-y-2">
-        <li class="font-bold text-lg pb-5 flex items-center">
-          {offre.favori && <span class="text-yellow-500 text-xl mr-2">⭐</span>}
-          {offre.nomMaison}
+        <li class="font-bold text-lg pb-5 flex items-center justify-between">
+          <div class="flex items-center">
+            {offre.favori && <span class="text-yellow-500 text-xl mr-2">⭐</span>}
+            {offre.nomMaison}
+          </div>
+
+          
+          <img src="../../public/etoile.png" alt="" class="w-8 h-8">
         </li>
         <li class="text-gray-700 pb-2">{offre.adresse}</li>
         <li class="text-green-600 font-bold">{offre.prix} €</li>
@@ -31,3 +36,9 @@ const { ...offre } = Astro.props;
     </div>
   </div>
 </div>
+
+<script>
+  //@ts-nocheck
+  import { setFavori } from "../../backend.js";
+  window.setFavori = setFavori;
+</script>

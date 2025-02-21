@@ -143,3 +143,19 @@ export async function filterByPrix(prixMin, prixMax) {
         return [];
     }
 }
+
+/// TP 6 
+
+export async function allAgents() {
+    try {
+        const records = await pb.collection('Agents').getFullList();
+        return records;
+    } catch (error) {
+        console.log('Erreur lors de la récupération des agents', error);
+        return [];
+    }
+}
+
+export async function setFavori(house) {
+    await pb.collection('maison').update(house.id, {favori: !house.favori});
+}

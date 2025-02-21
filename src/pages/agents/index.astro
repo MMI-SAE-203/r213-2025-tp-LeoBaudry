@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allAgents } from '../../backend.mjs';
+
+let message = '';
+let agents = [];
+
+if (Astro.request.method === "POST") {
+    // Gérer les éventuels filtres si nécessaires, par exemple par nom ou email
+    const data = await Astro.request.formData();
+    const filterNom = data.get("filterNom");
+
+    // Si un filtre est appliqué
+    if (filterNom) {
+        agents = await allAgents(); // Applique le filtre par nom si nécessaire
+        message = `Résultats pour : ${filterNom}`;
+    } else {
+        agents = await allAgents(); // Si aucun filtre, récupérer tous les agents
+        message = "Liste de tous les agents";
+    }
+} else {
+    agents = await allAgents();
+    message = "Liste de tous les agents";
+}
+---
+
+<Base titre="Agents">
+    <h1 class="text-6xl text-center">Agents</h1>
+
+    <div>
+        <form action="/agents" method="POST">
+            <input type="text" name="filterNom" placeholder="Filtrer par nom" />
+            <input type="submit" value="Filtrer" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded transition duration-300 cursor-pointer" />
+        </form>
+    </div>
+
+    <!-- Affichage du message d'information -->
+    {message && (
+        <div class="text-left my-4 text-green-500">
+            <p>{message}</p>
+        </div>
+    )}
+
+    <!-- Conteneur des cartes d'agents -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+        {agents.map((agent) => (
+            <div class="p-5 bg-gray-100 text-gray-800 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold">{agent.nom_agent} {agent.prenom_agent}</h3>
+                <p>Email: {agent.email_agent}</p>
+                <a href={`/agents/${agent.id}`} class="inline-block mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Voir plus</a>
+            </div>
+        ))}
+    </div>
+</Base>

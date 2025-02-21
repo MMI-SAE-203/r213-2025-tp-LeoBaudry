@@ -1,0 +1,49 @@
+---
+import { getAgentById } from '../../backend.mjs';
+import Base from '../../layouts/Base.astro';
+
+const { id } = Astro.params;
+
+const agent = await getAgentById(id);
+console.log("Agent", agent);
+
+if (!agent) {
+    return Astro.redirect('/agents');
+}
+---
+
+<Base titre={agent.nom_agent + ' ' + agent.prenom_agent}>
+    <h2 class="text-6xl font-bold mb-4 text-center">{agent.nom_agent} {agent.prenom_agent}</h2>
+    <div class="flex justify-center mb-6">
+        <!-- Ici, tu peux ajouter une photo ou un avatar de l'agent si disponible -->
+        <img src={agent.photo_url || '/images/default-avatar.jpg'} alt={agent.nom_agent} class="w-32 h-32 object-cover rounded-full">
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <p class="text-4xl font-bold text-green-600 mb-4">Contact Information</p>
+            <div class="space-y-4">
+                <div class="border-b pb-2">
+                    <p class="text-3xl">✉️ {agent.email_agent}</p>
+                </div>
+                <div class="border-b pb-2">
+                    <p class="text-3xl">📱 {agent.telephone_agent}</p>
+                </div>
+                <div class="border-b pb-4">
+                    <p class="text-3xl">🏢 {agent.agence} </p>
+                </div>
+            </div>
+        </div>
+        <div class="bg-blue-50 p-6 rounded-lg shadow-md">
+            <p class="text-3xl font-semibold mb-4">À propos de l'agent :</p>
+            <Fragment set:html={agent.description_agent} />
+        </div>
+    </div>
+
+    <div class="flex justify-center mt-6">
+        <a href="/agents" class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg transition duration-200">
+            Retour aux agents
+        </a>
+    </div>
+
+</Base>
