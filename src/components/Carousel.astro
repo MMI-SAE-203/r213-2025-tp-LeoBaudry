@@ -1,32 +1,27 @@
 ---
-import { allMaisonsFavori } from '../backend.mjs'; 
+import { allMaisonsFavori } from '../backend.mjs';
 
-const maisonsFavoris = await allMaisonsFavori(); 
-const imgUrls = maisonsFavoris.map(maison => maison.imgUrl); 
+const maisonsFavoris = await allMaisonsFavori();
+const imgUrls = maisonsFavoris.map(maison => maison.imgUrl);
 ---
 
-<div x-data="{
-    maisonsFavoris: <?json imgUrls ?>, // Passe uniquement les URLs des images au frontend
-    currentIndex: 0,
-    nextImage() {
-        this.currentIndex = (this.currentIndex + 1) % this.maisonsFavoris.length;
-    },
-    prevImage() {
-        this.currentIndex = (this.currentIndex - 1 + this.maisonsFavoris.length) % this.maisonsFavoris.length;
-    }
-}" class="relative">
-
-    <!-- Carousel -->
-    <div class="flex overflow-hidden">
-        <template x-for="(imgUrl, index) in maisonsFavoris" :key="index">
-            <div x-show="currentIndex === index" class="flex-none w-full">
-                <img :src="imgUrl" class="w-full h-64 object-cover">
-            </div>
-        </template>
-    </div>
-
-    <!-- Navigation -->
-    <button @click="prevImage" class="absolute top-1/2 left-2 transform -translate-y-1/2 text-white bg-black opacity-50 px-4 py-2 rounded-full">❮</button>
-    <button @click="nextImage" class="absolute top-1/2 right-2 transform -translate-y-1/2 text-white bg-black opacity-50 px-4 py-2 rounded-full">❯</button>
-
+<div x-data="{ images: <?json imgUrls ?>, current: 0 }" class="relative">
+  <!-- Carousel : affichage de l'image courante -->
+  <div class="overflow-hidden">
+    <template x-for="(img, i) in images" :key="i">
+      <div x-show="current === i">
+        <img :src="img" class="w-full h-64 object-cover">
+      </div>
+    </template>
+  </div>
+  
+  <!-- Boutons de navigation -->
+  <button @click="current = (current - 1 + images.length) % images.length" 
+          class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full">
+    ❮
+  </button>
+  <button @click="current = (current + 1) % images.length" 
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black text-white p-2 rounded-full">
+    ❯
+  </button>
 </div>
