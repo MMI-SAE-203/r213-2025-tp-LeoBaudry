@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Card from '../../components/Card.astro';
+import Carousel from '../../components/Carousel.astro';
 import { allMaisons, getOffre, filterByPrix } from '../../backend.mjs';
 
 let message = '';
@@ -183,4 +184,6 @@ if (Astro.request.method === "POST") {
             {offres.map((offre) => offre.favori && <Card {...offre}  />)}
         </div>
     </div>
+    <Carousel />
+
 </Base>

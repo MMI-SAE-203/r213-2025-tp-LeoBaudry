@@ -2,7 +2,9 @@
 const { ...offre } = Astro.props;
 ---
 
-<div class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+<div
+  x-data={`{favori: ${offre.favori}, clickFavori() {this.favori = !this.favori; setFavori(${JSON.stringify(offre)});}}`} 
+  class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg relative">
   <!-- Mode Flex (image à gauche, texte à droite) -->
   <div class="flex flex-col sm:flex-row h-full">
     <!-- Image -->
@@ -22,9 +24,6 @@ const { ...offre } = Astro.props;
             {offre.favori && <span class="text-yellow-500 text-xl mr-2">⭐</span>}
             {offre.nomMaison}
           </div>
-
-          
-          <img src="../../public/etoile.png" alt="" class="w-8 h-8">
         </li>
         <li class="text-gray-700 pb-2">{offre.adresse}</li>
         <li class="text-green-600 font-bold">{offre.prix} €</li>
@@ -35,10 +34,15 @@ const { ...offre } = Astro.props;
       </ul>
     </div>
   </div>
+
+  <!-- Bouton Favori (maintenant dans la card, en bas à gauche) -->
+  <button class="absolute bottom-2 left-2 p-2 text-red rounded-full bg-white shadow-md z-10 w-10 h-10 flex items-center justify-center" @click="clickFavori">
+    <span x-text="favori ? '⭐' : '★'"/>
+  </button>
 </div>
 
 <script>
   //@ts-nocheck
-  import { setFavori } from "../../backend.js";
+  import { setFavori } from "../backend.mjs";
   window.setFavori = setFavori;
 </script>

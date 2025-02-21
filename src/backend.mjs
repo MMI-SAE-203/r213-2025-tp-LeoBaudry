@@ -157,5 +157,6 @@ export async function allAgents() {
 }
 
 export async function setFavori(house) {
-    await pb.collection('maison').update(house.id, {favori: !house.favori});
+    console.log(house)
+    await pb.collection('Maison').update(house.id, {favori: !house.favori});
 }
